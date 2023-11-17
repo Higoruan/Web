@@ -36,7 +36,7 @@ document.getElementById('userForm').addEventListener('submit', function (event) 
     let raioValidation = false;
     document.getElementsByName("Prioridade").forEach(function (c) {
 
-        if (this.value) {
+        if (c.checked) {
             raioValidation = true;
         }
 
@@ -68,8 +68,9 @@ document.getElementById('userForm').addEventListener('submit', function (event) 
     } else if (nome) {
         mudarCorSucesso(nomeInput);
     }
-    
+
     if (!raioValidation) {
+
         $('#myModal').modal('show');
         var closeButton = document.querySelector('#Falha');
         if (closeButton !== null) {
@@ -114,7 +115,7 @@ document.getElementById('userForm').addEventListener('submit', function (event) 
     //     $('#myModal').modal('show');
     // }
 
-    if (nome != '' && !raioValidation) {
+    if (nome != '' && raioValidation) {
 
         var nome = document.getElementById('nome').value;
         var prioridade = document.querySelector('input[name="Prioridade"]:checked').value;
@@ -132,10 +133,23 @@ document.getElementById('userForm').addEventListener('submit', function (event) 
         <h3>Resultados:</h3>
         <p><strong>Nome da tarefa:</strong> ${nome}</p>
         <p><strong>Prioridade:</strong> ${prioridade}</p>
-        <p><strong>Descrição:</strong> ${descricao}</p>
-        <p><strong>Datas:</strong> ${data.join(', ')}</p>
-        
-    `;
+        `;
+        if (descricao === '' || descricao === null) {
+
+            resultContainer.innerHTML += `<p><strong>Descrição:</strong> Essa informação não foi fornecida! </p>`
+
+        } else {
+            resultContainer.innerHTML += `<p><strong>Descrição:</strong> ${descricao}</p>`
+        }
+        if (data.length === 0) {
+            console.log('Esta caindo aqui')
+            resultContainer.innerHTML += `<p><strong>Horarios:</strong> Essa informação não foi fornecida! </p>`
+
+
+        } else {
+            console.log(data);
+            resultContainer.innerHTML += `<p><strong>Horarios:</strong> ${data.join(', ')}</p>`
+        }
         $('#myModalSucess').modal('show');
 
 
